@@ -4,7 +4,7 @@ defmodule Desk do
   Various utils for ~/Desktop management
   """
 
-  @home "/Users/mmm/Desktos"
+  @home "/Users/mmm/Desktop/"
 
   @doc """
   Removes stale Screenshots
