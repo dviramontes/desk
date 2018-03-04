@@ -1,6 +1,6 @@
 # Desk
 
-**TODO: Add description**
+**Various utils for ~/Desktop management**
 
 ## Installation
 
