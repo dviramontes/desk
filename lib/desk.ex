@@ -33,7 +33,26 @@ defmodule Desk.CLI do
     end
   end
 
-  def main(_args) do
-    rm_ss()
+  def main(args \\ []) do
+    args
+    |> parse_args
+    |> respond
+  end
+
+  def parse_args(args) do
+    {opts, word, _} =
+      args
+      |> OptionParser.parse(switches: [upcase: :boolean])
+
+    {opts, List.to_string(word)}
+  end
+
+  def respond({opts, word}) do
+    if opts[:rmss] do
+      rm_ss()
+      IO.puts "~/Desktop/Screenshots* removed."
+    else
+      word
+    end
   end
 end
