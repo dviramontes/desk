@@ -3,7 +3,7 @@ defmodule Desk do
   Various utils for ~/Desktop management
   """
 
-  @home "/Users/mmm/Desktop/"
+  @home "#{System.user_home()}/Desktop/"
 
   @doc """
   Removes stale Screenshots
@@ -17,16 +17,15 @@ defmodule Desk do
   def rm_ss() do
     case File.ls(@home) do
       {:ok, files} ->
-        Enum.filter(files, fn file ->
-          not File.dir?(@home <> file)
-        end)
-        |> Enum.filter(fn s ->
-          case s do
-            "Screen Shot " <> _ -> true
+        Enum.map(files, &(@home <> &1))
+        |> Enum.reject(&File.dir?(&1))
+        |> Enum.filter(fn file ->
+          case file do
+            "#{@home}Screen Shot " <> _ -> true
             _ -> false
           end
         end)
-        |> Enum.map(fn ss -> File.rm(@home <> ss) end)
+        |> Enum.map(&File.rm(@home <> &1))
 
       {:error, error} ->
         IO.puts("#{error}: Screenshot directory not found")
